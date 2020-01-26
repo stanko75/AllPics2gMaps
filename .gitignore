@@ -8,3 +8,8 @@
 /AllPics2gMaps/AllPics2gMaps/obj
 /AllPics2gMaps/AllPics2gMaps/appsettings.json
 /AllPics2gMaps/AllPics2gMaps/appsettings.Development.json
+/AllPics2gMaps/.vs
+/AllPics2gMaps/AllPics2gMaps/bin/Debug/netcoreapp2.1
+/AllPics2gMaps/AllPics2gMaps/bin/Release/netcoreapp2.1
+/AllPics2gMaps/AllPics2gMaps/Properties/PublishProfiles
+/AllPics2gMaps/AllPics2gMaps/AllPics2gMaps.csproj.user
