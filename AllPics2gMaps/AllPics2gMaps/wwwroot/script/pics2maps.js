@@ -4,7 +4,7 @@
 
     var markers = [];
 
-    $.getJSON("http://test:2021/api/GoogleMaps", function (data) {
+    $.getJSON("/api/GoogleMaps", function (data) {
         data.forEach(function (file) {
 
             try {
