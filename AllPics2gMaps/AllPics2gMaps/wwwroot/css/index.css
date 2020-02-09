@@ -26,7 +26,7 @@ html, body {
 (min-device-width: 768px)  {
 	#map-canvas {
 		position: relative;
-		width: 100%; 
+		width: 50%; 
 		height: 100%; 
 		float: left;
 	}
