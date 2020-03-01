@@ -8,7 +8,7 @@
         data.forEach(function (file) {
 
             try {
-                var picsLatLng = new google.maps.LatLng(file.Latitude, file.Longitude);
+                var picsLatLng = new google.maps.LatLng(parseFloat(file.Latitude.replace(',', '.')), parseFloat(file.Longitude.replace(',', '.')));
                 var bounds = new google.maps.LatLngBounds();
 
                 var marker = new google.maps.Marker({

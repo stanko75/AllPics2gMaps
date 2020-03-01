@@ -1,7 +1,9 @@
 (function (ns) {
     /*globals google, map*/
     "use strict";
-    var map;
+    var map,
+        citiesViewModel,
+        mapsModel;
 
     function initMap() {
         try {
@@ -19,9 +21,16 @@
                 }
             }, 1000);
         }
+
+        citiesViewModel = new ns.CitiesViewModel();
+        mapsModel = {
+            citiesViewModel: citiesViewModel
+        };
+
+        ns.citiesViewModel = citiesViewModel;
         ns.map = map;
+        ko.applyBindings(mapsModel);
     }
 
     ns.initMap = initMap;
-
 })(window.milosev);
