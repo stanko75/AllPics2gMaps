@@ -10,8 +10,6 @@
         ns.cities = ko.observableArray();
 
         function GetCities() {
-            self.cities = ko.observableArray();
-
             $.getJSON("api/cities", function (data) {
                 data.forEach(function (item, index) {
                     city({ name: item.Name, id: item.ID });
