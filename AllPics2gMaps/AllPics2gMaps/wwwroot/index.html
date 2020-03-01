@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
 
 <head>
@@ -31,7 +31,7 @@
         Cities:
         <p/>
         <div class="checkboxes">
-            <span data-bind="template: {name: 'cities-template', foreach: window.milosev.cities}"></span>
+            <span data-bind="template: {name: 'cities-template', foreach: window.milosev.citiesViewModel.cities}"></span>
             <script type="text/html" id="cities-template">
                 <br />
                 <input data-bind="id: id, name: name" type="checkbox">

@@ -1,4 +1,4 @@
-﻿/*global window, ko*/
+﻿/*global window, ko, $*/
 
 (function (ns) {
     "use strict";
@@ -7,23 +7,23 @@
             getCities = new GetCities(),
             city = ko.observable();
 
-        ns.cities = ko.observableArray();
-
         function GetCities() {
+            self.cities = ko.observableArray();
+
             $.getJSON("api/cities", function (data) {
                 data.forEach(function (item, index) {
                     city({ name: item.Name, id: item.ID });
-                    ns.cities.push(city());
+                    self.cities.push(city());
                 });
-
             });
+
+            return self.cities;
         }
 
         return {
-            myCities: getCities
-        }
-    }
+            cities: getCities
+        };
+    };
 
 
 }(window.milosev));
-
