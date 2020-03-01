@@ -5,13 +5,6 @@ html, body {
 	padding: 0;
 }
 
-.checkboxes {
-    width: 20%;
-    height: 50%;
-    border: 1px solid;
-    overflow: scroll
-}
-
 #options {
     height: 100%;
 }
@@ -31,14 +24,28 @@ html, body {
 		float: left; 
 		overflow: auto;
 	}
+
+    .checkboxes {
+        width: 100%;
+        height: 50%;
+        border: 1px solid;
+        overflow: scroll
+    }
 }
 
 @media only screen and 
 (min-device-width: 768px)  {
 	#map-canvas {
 		position: relative;
-		width: 50%; 
+		width: 49%; 
 		height: 100%; 
 		float: left;
 	}
+
+    .checkboxes {
+        width: 50%;
+        height: 50%;
+        border: 1px solid;
+        overflow: scroll
+    }
 }
