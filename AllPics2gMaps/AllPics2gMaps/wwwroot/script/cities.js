@@ -9,6 +9,7 @@
 
         function GetCities() {
             self.cities = ko.observableArray();
+            self.selectedCities = ko.observableArray();
 
             $.getJSON("api/cities", function (data) {
                 data.forEach(function (item, index) {
@@ -17,7 +18,10 @@
                 });
             });
 
-            return self.cities;
+            return {
+                listOfCities: self.cities,
+                selectedCities: self.selectedCities
+            };
         }
 
         return {
