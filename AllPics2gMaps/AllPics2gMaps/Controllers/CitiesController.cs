@@ -1,6 +1,5 @@
 using AllPics2gMaps.Model;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -16,30 +15,32 @@ namespace AllPics2gMaps.Controllers
     public string Get()
     {
       string citiesJson = string.Empty;
-      IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", true, true).Build();
-      string connectionString = configuration["connectionString"];
-      string mySQL = "SELECT * FROM cities";
 
-      using (MySqlConnection mySqlConnection = new MySqlConnection(connectionString))
+      DB mySqlDB = new DB();
+
+      try
       {
-        using (MySqlCommand mySqlCommand = new MySqlCommand(mySQL, mySqlConnection))
+        mySqlDB.GpsMySqlQuery = "SELECT * FROM cities";
+        mySqlDB.GpsMySqlConnection.Open();
+        List<LatLngFileNameModel> latLngFileNames = new List<LatLngFileNameModel>();
+        MySqlDataReader mySqlDataReader = mySqlDB.GpsMySqlDataReader;
+
+        List<CityModel> cities = new List<CityModel>();
+        while (mySqlDataReader.Read())
         {
-          mySqlConnection.Open();
-          List<CityModel> cities = new List<CityModel>();
-
-          MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
-          while (mySqlDataReader.Read())
+          CityModel city = new CityModel
           {
-            CityModel city = new CityModel
-            {
-              Name = mySqlDataReader["Name"].ToString()
-            };
+            Name = mySqlDataReader["Name"].ToString()
+          };
 
-            cities.Add(city);
-          }
-
-          citiesJson = JsonSerializer.Serialize(cities);
+          cities.Add(city);
         }
+
+        citiesJson = JsonSerializer.Serialize(cities);
+      }
+      finally
+      {
+        mySqlDB.Dispose();
       }
 
       return citiesJson;

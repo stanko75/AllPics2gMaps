@@ -16,37 +16,33 @@ namespace AllPics2gMaps.Controllers
     public string Get()
     {
       string groupedByCities = string.Empty;
-      IConfiguration configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", true, true).Build();
-      string connectionString = configuration["connectionString"];
-      string mySQL = "SELECT * FROM gpslocations INNER JOIN cities ON gpslocations.CityID = cities.ID GROUP BY cities.ID";
+      DB mySqlDB = new DB();
 
-      using (MySqlConnection mySqlConnection = new MySqlConnection(connectionString))
+      try
       {
-        using (MySqlCommand mySqlCommand = new MySqlCommand(mySQL, mySqlConnection))
+        mySqlDB.GpsMySqlQuery = "SELECT * FROM gpslocations INNER JOIN cities ON gpslocations.CityID = cities.ID GROUP BY cities.ID";
+        mySqlDB.GpsMySqlConnection.Open();
+        List<LatLngFileNameModel> latLngFileNames = new List<LatLngFileNameModel>();
+        MySqlDataReader mySqlDataReader = mySqlDB.GpsMySqlDataReader;
+
+        while (mySqlDataReader.Read())
         {
-          mySqlConnection.Open();
-
-          MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
-
-          List<LatLngFileNameModel> latLngFileNames = new List<LatLngFileNameModel>();
-
-          while (mySqlDataReader.Read())
+          LatLngFileNameModel latLngFileName = new LatLngFileNameModel
           {
-            LatLngFileNameModel latLngFileName = new LatLngFileNameModel
-            {
-              Latitude = mySqlDataReader["Latitude"].ToString(),
-              Longitude = mySqlDataReader["Longitude"].ToString(),
-              FileName = mySqlDataReader["FileName"].ToString()
-            };
+            Latitude = mySqlDataReader["Latitude"].ToString(),
+            Longitude = mySqlDataReader["Longitude"].ToString(),
+            FileName = mySqlDataReader["FileName"].ToString()
+          };
 
-            string latitude = mySqlDataReader["Latitude"].ToString();
-            latLngFileNames.Add(latLngFileName);
-          }
-
-          groupedByCities = JsonSerializer.Serialize(latLngFileNames);
-
+          string latitude = mySqlDataReader["Latitude"].ToString();
+          latLngFileNames.Add(latLngFileName);
         }
 
+        groupedByCities = JsonSerializer.Serialize(latLngFileNames);
+      }
+      finally
+      {
+        mySqlDB.Dispose();
       }
 
       return groupedByCities;
