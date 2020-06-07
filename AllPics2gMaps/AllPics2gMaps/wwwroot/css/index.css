@@ -46,6 +46,10 @@ html, body {
         width: 50%;
         height: 50%;
         border: 1px solid;
-        overflow: scroll
+        overflow: scroll;
     }
+
+	#btnSend {
+		width: 50%;
+	}
 }
