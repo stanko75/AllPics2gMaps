@@ -20,6 +20,7 @@
     <script defer type="text/javascript" src="script/pics2maps.js"></script>
     <script defer type="text/javascript" src="script/thumbnails.js"></script>
     <script defer type="text/javascript" src="script/cities.js"></script>
+    <script defer type="text/javascript" src="script/applyFilter.js"></script>
     <script defer type="text/javascript" src="script/map.js"></script>
     <script defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC96EGKbYxxIadYOGTozj8NdD0F5CIYM4&callback=window.milosev.initMap"></script>
 
@@ -29,7 +30,7 @@
     <div id="map-canvas"></div>
     <div id="options">
         Cities:
-        <p />
+        <p/>
         <div class="checkboxes">
             <!--<span data-bind="template: function() {debugger; window.milosev.citiesViewModel.cities.listOfCities}()"></span>-->
             <span data-bind="template: {name: 'cities-template', foreach: window.milosev.citiesViewModel.cities.listOfCities}"></span>
@@ -40,7 +41,7 @@
                 <label data-bind="for: name, text: name"></label>
             </script>
         </div>
-        <button id="btnSend">Send</button>
+        <button data-bind="click: window.milosev.applyFilterViewModel.myClick" id="btnSend">Send</button>
     </div>
 </body>
 

@@ -3,6 +3,7 @@
     "use strict";
     var map,
         citiesViewModel,
+        applyFilterViewModel,
         mapsModel;
 
     function initMap() {
@@ -23,11 +24,15 @@
         }
 
         citiesViewModel = new ns.CitiesViewModel();
+        applyFilterViewModel = new ns.ApplyFilterViewModel();
+
         mapsModel = {
-            citiesViewModel: citiesViewModel
+            citiesViewModel: citiesViewModel,
+            applyFilterViewModel: applyFilterViewModel
         };
 
         ns.citiesViewModel = citiesViewModel;
+        ns.applyFilterViewModel = applyFilterViewModel;
         ns.map = map;
         ko.applyBindings(mapsModel);
     }
