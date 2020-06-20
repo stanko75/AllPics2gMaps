@@ -20,7 +20,7 @@ namespace AllPics2gMaps.Controllers
 
       try
       {
-        mySqlDB.GpsMySqlQuery = "SELECT * FROM cities";
+        mySqlDB.GpsMySqlQuery = "SELECT * FROM cities order by Name";
         mySqlDB.GpsMySqlConnection.Open();
         List<LatLngFileNameModel> latLngFileNames = new List<LatLngFileNameModel>();
         MySqlDataReader mySqlDataReader = mySqlDB.GpsMySqlDataReader;

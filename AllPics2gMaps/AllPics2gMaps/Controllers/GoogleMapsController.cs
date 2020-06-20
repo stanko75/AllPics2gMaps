@@ -56,10 +56,16 @@ namespace AllPics2gMaps.Controllers
     //}
 
     // GET: api/GoogleMaps/5
-    [HttpGet("{id}", Name = "Get")]
-    public string Get(int id)
+    //[HttpGet("{id}", Name = "Get")]
+    //public string Get(int id)
+    //{
+    //  return "value";
+    //}
+
+    [HttpGet("{json}", Name = "Get")]
+    public string Get(string json)
     {
-      return "value";
+      return json;
     }
 
     // POST: api/GoogleMaps
