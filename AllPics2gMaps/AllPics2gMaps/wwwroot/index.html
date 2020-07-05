@@ -32,11 +32,9 @@
         Cities:
         <p/>
         <div class="checkboxes">
-            <!--<span data-bind="template: function() {debugger; window.milosev.citiesViewModel.cities.listOfCities}()"></span>-->
             <span data-bind="template: {name: 'cities-template', foreach: window.milosev.citiesViewModel.cities.listOfCities}"></span>
             <script type="text/html" id="cities-template">
                 <br />
-                <!--<input data-bind="checked: function() {debugger; $parent.selectedCities}()" type="checkbox">-->
                 <input data-bind="id: id, name: name, checked: $parent.citiesViewModel.cities.selectedCities, value: name" type="checkbox">
                 <label data-bind="for: name, text: name"></label>
             </script>
