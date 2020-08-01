@@ -50,15 +50,39 @@ namespace AllPics2gMaps.Controllers
 
     // POST: api/GoogleMaps
     [HttpPost]
-    public async Task<ActionResult<string>> Post([FromBody] Filter value)
-    {    
+    public ActionResult<string> Post([FromBody] Filter value)
+    {
       string groupedByCities = string.Empty;
+      string unionCitiesAndGpsLocations = string.Empty;
       DB mySqlDB = new DB();
 
       try
       {
-        string listOfCities = "\"" + string.Join("\", \"", value.cities) + "\"";
-        mySqlDB.GpsMySqlQuery = $"SELECT * FROM gpslocations INNER JOIN cities ON gpslocations.CityID = cities.ID WHERE cities.Name in ({listOfCities}) GROUP BY cities.ID";
+        foreach (string city in value.cities)
+        {
+          if (string.IsNullOrWhiteSpace(unionCitiesAndGpsLocations))
+          {
+            unionCitiesAndGpsLocations = "("
+            + "SELECT cities.Name, gpslocations.* FROM cities "
+            + "INNER JOIN gpslocations ON gpslocations.CityID = cities.ID "
+            + $"WHERE cities.Name = '{city}' "
+            + "LIMIT 3"
+            + ")";
+          }
+          else
+          {
+            unionCitiesAndGpsLocations = unionCitiesAndGpsLocations
+              + " UNION ALL "
+              + "("
+              + "SELECT cities.Name, gpslocations.* FROM cities "
+              + "INNER JOIN gpslocations ON gpslocations.CityID = cities.ID "
+              + $"WHERE cities.Name = '{city}' "
+              + "LIMIT 3 "
+              + ")";
+          }
+        }
+
+        mySqlDB.GpsMySqlQuery = unionCitiesAndGpsLocations;
         mySqlDB.GpsMySqlConnection.Open();
         List<LatLngFileNameModel> latLngFileNames = new List<LatLngFileNameModel>();
         MySqlDataReader mySqlDataReader = mySqlDB.GpsMySqlDataReader;
