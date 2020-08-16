@@ -1,8 +1,9 @@
 (function (ns) {
-    /*globals google, map*/
+    /*globals google, ko*/
     "use strict";
     var map,
         citiesViewModel,
+        limitViewModel, 
         applyFilterViewModel,
         mapsModel;
 
@@ -24,14 +25,17 @@
         }
 
         citiesViewModel = new ns.CitiesViewModel();
+        limitViewModel = new ns.LimitViewModel();
         applyFilterViewModel = new ns.ApplyFilterViewModel();
 
         mapsModel = {
             citiesViewModel: citiesViewModel,
+            limitViewModel: limitViewModel,
             applyFilterViewModel: applyFilterViewModel
         };
 
         ns.citiesViewModel = citiesViewModel;
+        ns.limitViewModel = limitViewModel;
         ns.applyFilterViewModel = applyFilterViewModel;
         ns.map = map;
         ko.applyBindings(mapsModel);

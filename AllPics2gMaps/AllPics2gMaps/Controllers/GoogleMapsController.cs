@@ -58,27 +58,27 @@ namespace AllPics2gMaps.Controllers
 
       try
       {
-        foreach (string city in value.cities)
+        if (value.cities.Length > 0) 
         {
-          if (string.IsNullOrWhiteSpace(unionCitiesAndGpsLocations))
-          {
-            unionCitiesAndGpsLocations = "("
-            + "SELECT cities.Name, gpslocations.* FROM cities "
-            + "INNER JOIN gpslocations ON gpslocations.CityID = cities.ID "
-            + $"WHERE cities.Name = '{city}' "
-            + "LIMIT 3"
-            + ")";
-          }
-          else
-          {
-            unionCitiesAndGpsLocations = unionCitiesAndGpsLocations
-              + " UNION ALL "
-              + "("
+          string select = "("
               + "SELECT cities.Name, gpslocations.* FROM cities "
               + "INNER JOIN gpslocations ON gpslocations.CityID = cities.ID "
-              + $"WHERE cities.Name = '{city}' "
-              + "LIMIT 3 "
+              + "WHERE cities.Name = '{0}' "
+              + "LIMIT {1}"
               + ")";
+
+          foreach (string city in value.cities)
+          {
+            if (string.IsNullOrWhiteSpace(unionCitiesAndGpsLocations))
+            {
+              unionCitiesAndGpsLocations = string.Format(select, city, value.limit);
+            }
+            else
+            {
+              unionCitiesAndGpsLocations = unionCitiesAndGpsLocations
+                + " UNION ALL "
+                + string.Format(select, city, value.limit);
+            }
           }
         }
 
@@ -114,6 +114,7 @@ namespace AllPics2gMaps.Controllers
     public class Filter
     {
       public string[] cities { get; set; }
+      public int limit { get; set; }
     }
 
     // PUT: api/GoogleMaps/5

@@ -12,7 +12,7 @@
             self.selectedCities = ko.observableArray();
 
             $.getJSON("api/cities", function (data) {
-                data.forEach(function (item, index) {
+                data.forEach(function (item) {
                     city({ name: item.Name, id: item.ID });
                     self.cities.push(city());
                 });

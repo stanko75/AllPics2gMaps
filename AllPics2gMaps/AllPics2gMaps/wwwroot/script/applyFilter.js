@@ -5,9 +5,8 @@
     ns.ApplyFilterViewModel = function () {
         var self = this;
         self.myClick = async () => {
-            var json = JSON.stringify({ cities: ns.citiesViewModel.cities.selectedCities() });
+            var json = JSON.stringify({ cities: ns.citiesViewModel.cities.selectedCities(), limit: ns.limitViewModel.limit() });
 
-            const response = await fetch("api/GoogleMaps/" + encodeURIComponent(json));
             $.ajax({
                 url: "api/GoogleMaps/",
                 type: "POST",
