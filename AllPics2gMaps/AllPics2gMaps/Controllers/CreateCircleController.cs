@@ -12,9 +12,10 @@ namespace AllPics2gMaps.Controllers
     [HttpPost]
     public ActionResult<string> Post([FromBody] Circles value)
     {
+      //query taken from https://developers.google.com/maps/solutions/store-locator/clothing-store-locator#findnearsql
       string sqlTemplate = "(SELECT "
                               + "*, ( "
-                              + "{0} * acos( "
+                              + "6371 * acos( "
                               + "cos(radians({1})) "
                               + "* cos(radians(latitude)) "
                               + "* cos(radians(longitude) - radians({2})) "
@@ -23,6 +24,7 @@ namespace AllPics2gMaps.Controllers
                               + "   )"
                               + ") AS distance "
                               + "FROM gpslocations "
+                              + "HAVING distance < {0} "
                               + "ORDER BY distance "
                               + "LIMIT 0 , 20)";
       string unionCircles = string.Empty;

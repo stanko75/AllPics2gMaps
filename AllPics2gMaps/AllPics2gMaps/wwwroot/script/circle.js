@@ -13,8 +13,6 @@
 
             var json = JSON.stringify({ circles: ns.circlesFilter });
 
-            console.log(json);
-
             $.ajax({
                 url: "api/CreateCircle/",
                 type: "POST",
@@ -41,21 +39,20 @@
         google.maps.event.addListener(map, 'click', function (event) {
 
             var circleProperties,
-                radius = Math.sqrt(603502) * 100,
+                radius = Math.sqrt(self.radius()) * 100,
                 center = { lat: self.lat(), lng: self.lng() };
 
             new google.maps.Circle({
                 strokeColor: "#000000",
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
-                //fillColor: "#FF0000",
                 fillOpacity: 0.35,
                 map,
                 center: center,
                 radius: radius
             });
 
-            circleProperties = { radius: radius, lat: self.lat(), lng: self.lng() };
+            circleProperties = { radius: self.radius(), lat: self.lat(), lng: self.lng() };
 
             if (!ns.circlesFilter) {
                 ns.circlesFilter = [];
