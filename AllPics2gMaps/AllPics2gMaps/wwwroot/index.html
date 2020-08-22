@@ -23,6 +23,7 @@
     <script defer type="text/javascript" src="script/limit.js"></script>
     <script defer type="text/javascript" src="script/applyFilter.js"></script>
     <script defer type="text/javascript" src="script/map.js"></script>
+    <script defer type="text/javascript" src="script/circle.js"></script>
     <script defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC96EGKbYxxIadYOGTozj8NdD0F5CIYM4&callback=window.milosev.initMap"></script>
 
 </head>
@@ -45,6 +46,14 @@
         <input type="number" name="limit" data-bind="value: window.milosev.limitViewModel.limit">
         <p />
         <button data-bind="click: window.milosev.applyFilterViewModel.myClick" id="btnSend">Send</button>
+        <label for="radius">Circle radius:</label>
+        <input type="number" name="radius" data-bind="value: window.milosev.circleViewModel.radius">
+        <label for="lat">Center latitude:</label>
+        <input type="number" name="lat" step="0.0000000000001" data-bind="value: window.milosev.circleViewModel.lat">
+        <label for="lng">Center longitude:</label>
+        <input type="number" name="lng" step="0.0000000000001" data-bind="value: window.milosev.circleViewModel.lng">
+        <p />
+        <button data-bind="click: window.milosev.circleViewModel.createCircle" id="createCircle">Create circle</button>
     </div>
 </body>
 

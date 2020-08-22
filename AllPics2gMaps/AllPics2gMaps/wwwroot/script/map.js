@@ -5,6 +5,7 @@
         citiesViewModel,
         limitViewModel, 
         applyFilterViewModel,
+        circleViewModel,
         mapsModel;
 
     function initMap() {
@@ -24,22 +25,25 @@
             }, 1000);
         }
 
+        ns.map = map;
         citiesViewModel = new ns.CitiesViewModel();
         limitViewModel = new ns.LimitViewModel();
         applyFilterViewModel = new ns.ApplyFilterViewModel();
+        circleViewModel = new ns.CircleViewModel();
 
         mapsModel = {
             citiesViewModel: citiesViewModel,
+            circleViewModel: circleViewModel,
             limitViewModel: limitViewModel,
             applyFilterViewModel: applyFilterViewModel
         };
 
         ns.citiesViewModel = citiesViewModel;
+        ns.circleViewModel = circleViewModel;
         ns.limitViewModel = limitViewModel;
         ns.applyFilterViewModel = applyFilterViewModel;
-        ns.map = map;
         ko.applyBindings(mapsModel);
     }
 
     ns.initMap = initMap;
-})(window.milosev);
+}(window.milosev));
