@@ -13,7 +13,7 @@ namespace AllPics2gMaps.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  public class CreateCircleController : ControllerBase
+  public class CreateCircleController : CommonController
   {
     [HttpPost]
     public ActionResult<string> Post([FromBody] Circles value)
@@ -55,29 +55,7 @@ namespace AllPics2gMaps.Controllers
         }
       }
 
-      using (DB mySqlDB = new DB())
-      {
-        mySqlDB.GpsMySqlQuery = unionCircles;
-        mySqlDB.GpsMySqlConnection.Open();
-        List<LatLngFileNameModel> latLngFileNames = new List<LatLngFileNameModel>();
-        MySqlDataReader mySqlDataReader = mySqlDB.GpsMySqlDataReader;
-
-        while (mySqlDataReader.Read())
-        {
-          LatLngFileNameModel latLngFileName = new LatLngFileNameModel
-          {
-            Latitude = mySqlDataReader["Latitude"].ToString(),
-            Longitude = mySqlDataReader["Longitude"].ToString(),
-            FileName = mySqlDataReader["FileName"].ToString()
-          };
-
-          latLngFileNames.Add(latLngFileName);
-        }
-
-        groupedByCircles = JsonSerializer.Serialize(latLngFileNames);
-      }
-
-      return Ok(JsonSerializer.Serialize(groupedByCircles));
+      return Ok(JsonSerializer.Serialize(GetLatLngFromDB(unionCircles)));
     }
 
   }

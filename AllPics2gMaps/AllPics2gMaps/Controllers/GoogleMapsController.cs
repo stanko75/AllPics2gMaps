@@ -9,105 +9,46 @@ namespace AllPics2gMaps.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  public class GoogleMapsController : ControllerBase
+  public class GoogleMapsController : CommonController
   {
     // GET: api/GoogleMaps
     [HttpGet]
     public string Get()
     {
-      string groupedByCities = string.Empty;
-      DB mySqlDB = new DB();
-
-      try
-      {
-        mySqlDB.GpsMySqlQuery = "SELECT * FROM gpslocations INNER JOIN cities ON gpslocations.CityID = cities.ID GROUP BY cities.ID";
-        mySqlDB.GpsMySqlConnection.Open();
-        List<LatLngFileNameModel> latLngFileNames = new List<LatLngFileNameModel>();
-        MySqlDataReader mySqlDataReader = mySqlDB.GpsMySqlDataReader;
-
-        while (mySqlDataReader.Read())
-        {
-          LatLngFileNameModel latLngFileName = new LatLngFileNameModel
-          {
-            Latitude = mySqlDataReader["Latitude"].ToString(),
-            Longitude = mySqlDataReader["Longitude"].ToString(),
-            FileName = mySqlDataReader["FileName"].ToString()
-          };
-
-          string latitude = mySqlDataReader["Latitude"].ToString();
-          latLngFileNames.Add(latLngFileName);
-        }
-
-        groupedByCities = JsonSerializer.Serialize(latLngFileNames);
-      }
-      finally
-      {
-        mySqlDB.Dispose();
-      }
-
-      return groupedByCities;
+      return GetLatLngFromDB("SELECT * FROM gpslocations INNER JOIN cities ON gpslocations.CityID = cities.ID GROUP BY cities.ID");
     }
 
     // POST: api/GoogleMaps
     [HttpPost]
     public ActionResult<string> Post([FromBody] Filter value)
     {
-      string groupedByCities = string.Empty;
       string unionCitiesAndGpsLocations = string.Empty;
-      DB mySqlDB = new DB();
 
-      try
+      if (value.cities.Length > 0)
       {
-        if (value.cities.Length > 0) 
-        {
-          string sqlTemplate = "("
-              + "SELECT gpslocations.* FROM cities "
-              + "INNER JOIN gpslocations ON gpslocations.CityID = cities.ID "
-              + "WHERE cities.Name = '{0}' "
-              + "LIMIT {1}"
-              + ")";
+        string sqlTemplate = "("
+            + "SELECT gpslocations.* FROM cities "
+            + "INNER JOIN gpslocations ON gpslocations.CityID = cities.ID "
+            + "WHERE cities.Name = '{0}' "
+            + "LIMIT {1}"
+            + ")";
 
-          foreach (string city in value.cities)
+        foreach (string city in value.cities)
+        {
+          if (string.IsNullOrWhiteSpace(unionCitiesAndGpsLocations))
           {
-            if (string.IsNullOrWhiteSpace(unionCitiesAndGpsLocations))
-            {
-              unionCitiesAndGpsLocations = string.Format(sqlTemplate, city, value.limit);
-            }
-            else
-            {
-              unionCitiesAndGpsLocations = unionCitiesAndGpsLocations
-                + " UNION ALL "
-                + string.Format(sqlTemplate, city, value.limit);
-            }
+            unionCitiesAndGpsLocations = string.Format(sqlTemplate, city, value.limit);
+          }
+          else
+          {
+            unionCitiesAndGpsLocations = unionCitiesAndGpsLocations
+              + " UNION ALL "
+              + string.Format(sqlTemplate, city, value.limit);
           }
         }
-
-        mySqlDB.GpsMySqlQuery = unionCitiesAndGpsLocations;
-        mySqlDB.GpsMySqlConnection.Open();
-        List<LatLngFileNameModel> latLngFileNames = new List<LatLngFileNameModel>();
-        MySqlDataReader mySqlDataReader = mySqlDB.GpsMySqlDataReader;
-
-        while (mySqlDataReader.Read())
-        {
-          LatLngFileNameModel latLngFileName = new LatLngFileNameModel
-          {
-            Latitude = mySqlDataReader["Latitude"].ToString(),
-            Longitude = mySqlDataReader["Longitude"].ToString(),
-            FileName = mySqlDataReader["FileName"].ToString()
-          };
-
-          latLngFileNames.Add(latLngFileName);
-        }
-
-        groupedByCities = JsonSerializer.Serialize(latLngFileNames);
-      }
-      finally
-      {
-        mySqlDB.Dispose();
       }
 
-      return Ok(JsonSerializer.Serialize(groupedByCities));
-
+      return Ok(JsonSerializer.Serialize(GetLatLngFromDB(unionCitiesAndGpsLocations)));
     }
 
     public class Filter
