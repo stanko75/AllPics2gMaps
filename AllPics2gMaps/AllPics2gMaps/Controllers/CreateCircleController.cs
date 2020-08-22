@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using System.Text.Json;
-using System.Threading.Tasks;
 using AllPics2gMaps.Model;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
 
 namespace AllPics2gMaps.Controllers
 {
@@ -18,8 +12,7 @@ namespace AllPics2gMaps.Controllers
     [HttpPost]
     public ActionResult<string> Post([FromBody] Circles value)
     {
-      string groupedByCircles = string.Empty;
-      string sqlTemplate = "SELECT "
+      string sqlTemplate = "(SELECT "
                               + "*, ( "
                               + "{0} * acos( "
                               + "cos(radians({1})) "
@@ -31,26 +24,28 @@ namespace AllPics2gMaps.Controllers
                               + ") AS distance "
                               + "FROM gpslocations "
                               + "ORDER BY distance "
-                              + "LIMIT 0 , 20;";
+                              + "LIMIT 0 , 20)";
       string unionCircles = string.Empty;
 
       if (value.circles.Length > 0)
       {
         foreach (CircleModel circle in value.circles)
         {
-          if (string.IsNullOrWhiteSpace(unionCircles))
-          {
-            unionCircles = string.Format(sqlTemplate
+          string sql = string.Format(sqlTemplate
               , circle.radius.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })
               , circle.lat.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })
               , circle.lng.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })
              );
+
+          if (string.IsNullOrWhiteSpace(unionCircles))
+          {
+            unionCircles = sql;
           }
           else
           {
             unionCircles = unionCircles
               + " UNION ALL "
-              + string.Format(sqlTemplate, circle.radius, circle.lat, circle.lng);
+              + sql;
           }
         }
       }
