@@ -6,7 +6,7 @@
         var self = this,
             map = ns.map;
 
-        self.radius = ko.observable(603502);
+        self.radius = ko.observable(100000);
         self.lat = ko.observable(45.23781111);
         self.lng = ko.observable(19.82721111);
         self.createCircle = function () {
@@ -39,7 +39,6 @@
         google.maps.event.addListener(map, 'click', function (event) {
 
             var circleProperties,
-                radius = Math.sqrt(self.radius()) * 100,
                 center = { lat: self.lat(), lng: self.lng() };
 
             new google.maps.Circle({
@@ -49,7 +48,8 @@
                 fillOpacity: 0.35,
                 map,
                 center: center,
-                radius: radius
+                radius: parseFloat(self.radius()),
+                editable: true
             });
 
             circleProperties = { radius: self.radius(), lat: self.lat(), lng: self.lng() };

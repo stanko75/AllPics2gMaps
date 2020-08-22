@@ -33,8 +33,10 @@ namespace AllPics2gMaps.Controllers
       {
         foreach (CircleModel circle in value.circles)
         {
+          float radius = circle.radius / 1000;
+
           string sql = string.Format(sqlTemplate
-              , circle.radius.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })
+              , radius.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })
               , circle.lat.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })
               , circle.lng.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })
              );
