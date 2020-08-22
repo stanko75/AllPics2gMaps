@@ -60,8 +60,8 @@ namespace AllPics2gMaps.Controllers
       {
         if (value.cities.Length > 0) 
         {
-          string select = "("
-              + "SELECT cities.Name, gpslocations.* FROM cities "
+          string sqlTemplate = "("
+              + "SELECT gpslocations.* FROM cities "
               + "INNER JOIN gpslocations ON gpslocations.CityID = cities.ID "
               + "WHERE cities.Name = '{0}' "
               + "LIMIT {1}"
@@ -71,13 +71,13 @@ namespace AllPics2gMaps.Controllers
           {
             if (string.IsNullOrWhiteSpace(unionCitiesAndGpsLocations))
             {
-              unionCitiesAndGpsLocations = string.Format(select, city, value.limit);
+              unionCitiesAndGpsLocations = string.Format(sqlTemplate, city, value.limit);
             }
             else
             {
               unionCitiesAndGpsLocations = unionCitiesAndGpsLocations
                 + " UNION ALL "
-                + string.Format(select, city, value.limit);
+                + string.Format(sqlTemplate, city, value.limit);
             }
           }
         }
@@ -96,7 +96,6 @@ namespace AllPics2gMaps.Controllers
             FileName = mySqlDataReader["FileName"].ToString()
           };
 
-          string latitude = mySqlDataReader["Latitude"].ToString();
           latLngFileNames.Add(latLngFileName);
         }
 
