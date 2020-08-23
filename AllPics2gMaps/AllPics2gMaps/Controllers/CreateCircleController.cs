@@ -52,9 +52,10 @@ namespace AllPics2gMaps.Controllers
               + sql;
           }
         }
+        return Ok(JsonSerializer.Serialize(GetLatLngFromDB(unionCircles)));
       }
 
-      return Ok(JsonSerializer.Serialize(GetLatLngFromDB(unionCircles)));
+      return Ok();
     }
 
   }
