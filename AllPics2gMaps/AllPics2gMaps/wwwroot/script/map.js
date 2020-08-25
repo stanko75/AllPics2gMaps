@@ -6,7 +6,8 @@
         limitViewModel, 
         applyFilterViewModel,
         circleViewModel,
-        mapsModel;
+        mapsModel,
+        groupedByCityViewModel;
 
     function initMap() {
         try {
@@ -30,20 +31,24 @@
         limitViewModel = new ns.LimitViewModel();
         applyFilterViewModel = new ns.ApplyFilterViewModel();
         circleViewModel = new ns.CircleViewModel();
+        groupedByCityViewModel = new ns.GroupedByCityViewModel();
 
         mapsModel = {
             citiesViewModel: citiesViewModel,
             circleViewModel: circleViewModel,
             limitViewModel: limitViewModel,
-            applyFilterViewModel: applyFilterViewModel
+            applyFilterViewModel: applyFilterViewModel,
+            groupedByCityViewModel : groupedByCityViewModel
         };
 
         ns.citiesViewModel = citiesViewModel;
         ns.circleViewModel = circleViewModel;
         ns.limitViewModel = limitViewModel;
         ns.applyFilterViewModel = applyFilterViewModel;
+        ns.groupedByCityViewModel = groupedByCityViewModel;
         ko.applyBindings(mapsModel);
     }
 
     ns.initMap = initMap;
+    ns.markers = [];
 }(window.milosev));

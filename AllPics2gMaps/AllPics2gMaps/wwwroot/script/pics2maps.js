@@ -2,8 +2,6 @@
     /*globals google, $*/
     "use strict";
 
-    var markers = [];
-
     function createMarker(file) {
         try {
             var picsLatLng = new google.maps.LatLng(parseFloat(file.Latitude.replace(',', '.')), parseFloat(file.Longitude.replace(',', '.')));
@@ -20,7 +18,7 @@
                 window.open(marker.url, "_target");
             });
 
-            markers.push(marker);
+            ns.markers.push(marker);
 
             bounds.extend(picsLatLng);
             ns.map.fitBounds(bounds);
@@ -45,14 +43,6 @@
             }
         }
     }
-
-    $.getJSON("/api/GoogleMaps", function (data) {
-        data.forEach(function (file) {
-            createMarker(file);
-        });
-    }).done(function () {
-        ns.markers = markers;
-    });
 
     ns.createMarker = createMarker;
 })(window.milosev);

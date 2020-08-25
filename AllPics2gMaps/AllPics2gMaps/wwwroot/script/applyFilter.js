@@ -1,11 +1,14 @@
-﻿/*global window, ko, $*/
+﻿/*global window, $*/
+/* jshint esversion: 8 */
 
 (function (ns) {
     "use strict";
     ns.ApplyFilterViewModel = function () {
         var self = this;
-        self.myClick = async () => {
-            var json = JSON.stringify({ cities: ns.citiesViewModel.cities.selectedCities(), limit: ns.limitViewModel.limit() });
+        self.sendFilterJsonClick = async () => {
+            var json = JSON.stringify({
+                cities: ns.citiesViewModel.cities.selectedCities(), limit: ns.limitViewModel.limit()
+            });
 
             $.ajax({
                 url: "api/GoogleMaps/",
@@ -18,15 +21,15 @@
                     ns.markers[i].setMap(null);
                 }
                 ns.markers = [];
-                var listOfCities = $.parseJSON(data)
+                var listOfCities = $.parseJSON(data);
                 listOfCities.forEach(function (file) {
                     ns.createMarker(file);
                 });
-            })
-        }
+            });
+        };
 
         return {
-            myClick: self.myClick
+            sendFilterJsonClick: self.sendFilterJsonClick
         };
     };
 }(window.milosev));

@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link type="text/css" rel="stylesheet" href="css/circles.css" />
+    <script defer type="text/javascript" src="lib/jquery-3.3.1.js"></script>
+    <script defer type="text/javascript" src="lib/knockout-3.5.1.js"></script>
+    <script defer type="text/javascript" src="script/namespaces.js"></script>
+    <script defer type="text/javascript" src="script/thumbnails.js"></script>
+    <script defer type="text/javascript" src="script/cities.js"></script>
+    <script defer type="text/javascript" src="script/limit.js"></script>
+    <script defer type="text/javascript" src="script/applyFilter.js"></script>
+    <script defer type="text/javascript" src="script/map.js"></script>
+    <script defer type="text/javascript" src="script/circle.js"></script>
+    <script defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC96EGKbYxxIadYOGTozj8NdD0F5CIYM4&callback=window.milosev.initMap"></script>
+    <title>Circles</title>
+</head>
+<body>
+    <div id="map-canvas"></div>
+    <div id="options">
+        <label for="radius">Circle radius:</label>
+        <input type="number" name="radius" data-bind="value: window.milosev.circleViewModel.radius">
+        <label for="lat">Center latitude:</label>
+        <input type="number" name="lat" step="0.00000000000001" data-bind="value: window.milosev.circleViewModel.lat">
+        <label for="lng">Center longitude:</label>
+        <input type="number" name="lng" step="0.00000000000001" data-bind="value: window.milosev.circleViewModel.lng">
+        <p />
+        <button data-bind="click: window.milosev.circleViewModel.createCircle" id="createCircle">Create circle</button>
+        <button data-bind="click: window.milosev.circleViewModel.removeCircles" id="removeCircles">Remove all circles</button>
+    </div>
+</body>
+</html>

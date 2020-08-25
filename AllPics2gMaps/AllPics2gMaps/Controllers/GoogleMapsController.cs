@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using AllPics2gMaps.Model;
-using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace AllPics2gMaps.Controllers
 {
