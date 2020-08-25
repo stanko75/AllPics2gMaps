@@ -46,53 +46,58 @@
         });
 
         google.maps.event.addListener(map, 'click', function (event) {
+            var url = new URL(window.location.href);
+            var useCircles = url.searchParams.get("useCircles");
 
-            var circleProperties,
-                center = { lat: self.lat(), lng: self.lng() },
-                circle = new google.maps.Circle({
-                    strokeColor: "#000000",
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillOpacity: 0.35,
-                    map,
-                    center: center,
-                    radius: parseFloat(self.radius()),
-                    editable: true,
-                    draggable: true
+            if (useCircles) {
+
+                var circleProperties,
+                    center = { lat: self.lat(), lng: self.lng() },
+                    circle = new google.maps.Circle({
+                        strokeColor: "#000000",
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillOpacity: 0.35,
+                        map,
+                        center: center,
+                        radius: parseFloat(self.radius()),
+                        editable: true,
+                        draggable: true
+                    });
+
+                circles.push(circle);
+
+                google.maps.event.addListener(circle, 'radius_changed', function (event) {
+                    var radiuschangedCircle = ns.circlesFilter.find(element => element = circle);
+
+                    if (radiuschangedCircle) {
+                        radiuschangedCircle.radius = circle.getRadius();
+                    }
+
+                    self.radius(circle.getRadius());
+
                 });
 
-            circles.push(circle);
+                google.maps.event.addListener(circle, 'dragend', function (event) {
+                    var dragedCircle = ns.circlesFilter.find(element => element = circle);
 
-            google.maps.event.addListener(circle, 'radius_changed', function (event) {
-                var radiuschangedCircle = ns.circlesFilter.find(element => element = circle);
+                    if (dragedCircle) {
+                        dragedCircle.lat = event.latLng.lat();
+                        dragedCircle.lng = event.latLng.lng();
+                    }
 
-                if (radiuschangedCircle) {
-                    radiuschangedCircle.radius = circle.getRadius();
+                    self.lat(event.latLng.lat());
+                    self.lng(event.latLng.lng());
+                });
+
+                circleProperties = { radius: self.radius(), lat: self.lat(), lng: self.lng() };
+
+                if (!ns.circlesFilter) {
+                    ns.circlesFilter = [];
                 }
 
-                self.radius(circle.getRadius());
-
-            });
-
-            google.maps.event.addListener(circle, 'dragend', function (event) {
-                var dragedCircle = ns.circlesFilter.find(element => element = circle);
-
-                if (dragedCircle) {
-                    dragedCircle.lat = event.latLng.lat();
-                    dragedCircle.lng = event.latLng.lng();
-                }
-
-                self.lat(event.latLng.lat());
-                self.lng(event.latLng.lng());
-            });
-
-            circleProperties = { radius: self.radius(), lat: self.lat(), lng: self.lng() };
-
-            if (!ns.circlesFilter) {
-                ns.circlesFilter = [];
-            }
-
-            ns.circlesFilter.push(circleProperties);
+                ns.circlesFilter.push(circleProperties);
+            };
         });
 
         return {

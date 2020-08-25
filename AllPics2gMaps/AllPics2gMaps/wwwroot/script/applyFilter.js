@@ -28,8 +28,14 @@
             });
         };
 
+        self.useCirclesClick = async () => {
+            ns.useCircles = true;
+            window.location.href = "circles.html?useCircles=true";
+        };
+
         return {
-            sendFilterJsonClick: self.sendFilterJsonClick
+            sendFilterJsonClick: self.sendFilterJsonClick,
+            useCirclesClick: self.useCirclesClick
         };
     };
 }(window.milosev));
