@@ -52,7 +52,7 @@
             if (useCircles) {
 
                 var circleProperties,
-                    center = { lat: self.lat(), lng: self.lng() },
+                    center = { lat: event.latLng.lat(), lng: event.latLng.lng() },
                     circle = new google.maps.Circle({
                         strokeColor: "#000000",
                         strokeOpacity: 0.8,

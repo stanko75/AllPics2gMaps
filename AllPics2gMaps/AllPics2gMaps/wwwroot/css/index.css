@@ -32,6 +32,10 @@ html, body {
         overflow: scroll
     }
 
+	.buttons {
+		width: 50%;
+	}
+
 }
 
 @media only screen and 

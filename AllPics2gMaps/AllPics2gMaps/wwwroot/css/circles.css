@@ -5,16 +5,9 @@ html, body {
 	padding: 0;
 }
 
-#options {
-    height: 100%;
-}
-
-@media only screen and 
-(min-device-width: 768px)  {
-	#map-canvas {
-		position: relative;
-		width: 100%; 
-		height: 100%; 
-		float: left;
-	}
+#map-canvas {
+	position: relative;
+	width: 100%; 
+	height: 90%; 
+	float: left;
 }
