@@ -20,7 +20,7 @@ namespace AllPics2gMaps.Controllers
     {
       string unionCitiesAndGpsLocations = string.Empty;
 
-      if (value.cities.Length > 0)
+      if (value.Cities.Length > 0)
       {
         string sqlTemplate = "("
             + "SELECT gpslocations.* FROM cities "
@@ -29,17 +29,17 @@ namespace AllPics2gMaps.Controllers
             + "LIMIT {1}"
             + ")";
 
-        foreach (string city in value.cities)
+        foreach (string city in value.Cities)
         {
           if (string.IsNullOrWhiteSpace(unionCitiesAndGpsLocations))
           {
-            unionCitiesAndGpsLocations = string.Format(sqlTemplate, city, value.limit);
+            unionCitiesAndGpsLocations = string.Format(sqlTemplate, city, value.Limit);
           }
           else
           {
             unionCitiesAndGpsLocations = unionCitiesAndGpsLocations
               + " UNION ALL "
-              + string.Format(sqlTemplate, city, value.limit);
+              + string.Format(sqlTemplate, city, value.Limit);
           }
         }
       }
@@ -49,8 +49,8 @@ namespace AllPics2gMaps.Controllers
 
     public class Filter
     {
-      public string[] cities { get; set; }
-      public int limit { get; set; }
+      public string[] Cities { get; set; }
+      public int Limit { get; set; }
     }
   }
 }
