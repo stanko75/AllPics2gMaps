@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace AllPics2gMaps.Tests
 {
-  public class CreateCircleControllerTest
+  public class CreateCircleControllerTests
   {
     [Test]
     public void CheckPostMethod()
