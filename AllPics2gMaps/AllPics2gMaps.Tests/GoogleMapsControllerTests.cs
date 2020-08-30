@@ -1,4 +1,5 @@
 ﻿using AllPics2gMaps.Controllers;
+using AllPics2gMaps.Model;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -27,7 +28,7 @@ namespace AllPics2gMaps.Tests
     [Test]
     public void CheckPostMethodFilter()
     {
-      GoogleMapsController.Filter value = new GoogleMapsController.Filter();
+      GoogleMapsFilterModel value = new GoogleMapsFilterModel();
 
       value.Cities = new string[1];
       value.Cities[0] = "Bonn";

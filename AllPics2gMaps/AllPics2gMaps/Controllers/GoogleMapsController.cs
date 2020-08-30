@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AllPics2gMaps.Model;
+using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
 namespace AllPics2gMaps.Controllers
@@ -16,7 +17,7 @@ namespace AllPics2gMaps.Controllers
 
     // POST: api/GoogleMaps
     [HttpPost]
-    public ActionResult<string> Post([FromBody] Filter value)
+    public ActionResult<string> Post([FromBody] GoogleMapsFilterModel value)
     {
       string unionCitiesAndGpsLocations = string.Empty;
 
@@ -45,12 +46,6 @@ namespace AllPics2gMaps.Controllers
       }
 
       return Ok(JsonSerializer.Serialize(GetLatLngFromDB(unionCitiesAndGpsLocations)));
-    }
-
-    public class Filter
-    {
-      public string[] Cities { get; set; }
-      public int Limit { get; set; }
     }
   }
 }
