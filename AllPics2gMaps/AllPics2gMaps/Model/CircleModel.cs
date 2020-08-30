@@ -2,13 +2,13 @@
 {
   public class CircleModel
   {
-    public float radius { get; set; }
-    public float lat { get; set; }
-    public float lng { get; set; }
+    public float Radius { get; set; }
+    public float Lat { get; set; }
+    public float Lng { get; set; }
   }
 
-  public class Circles
+  public class CirclesClass
   {
-    public CircleModel[] circles { get; set; }
+    public CircleModel[] Circles { get; set; }
   }
 }

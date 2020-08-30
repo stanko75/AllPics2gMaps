@@ -10,7 +10,7 @@ namespace AllPics2gMaps.Controllers
   public class CreateCircleController : CommonController
   {
     [HttpPost]
-    public ActionResult<string> Post([FromBody] Circles value)
+    public ActionResult<string> Post([FromBody] CirclesClass value)
     {
       //query taken from https://developers.google.com/maps/solutions/store-locator/clothing-store-locator#findnearsql
       string sqlTemplate = "(SELECT "
@@ -29,16 +29,16 @@ namespace AllPics2gMaps.Controllers
                               + "LIMIT 0 , 20)";
       string unionCircles = string.Empty;
 
-      if (value.circles.Length > 0)
+      if (value.Circles.Length > 0)
       {
-        foreach (CircleModel circle in value.circles)
+        foreach (CircleModel circle in value.Circles)
         {
-          float radius = circle.radius / 1000;
+          float radius = circle.Radius / 1000;
 
           string sql = string.Format(sqlTemplate
               , radius.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })
-              , circle.lat.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })
-              , circle.lng.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })
+              , circle.Lat.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })
+              , circle.Lng.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "." })
              );
 
           if (string.IsNullOrWhiteSpace(unionCircles))
