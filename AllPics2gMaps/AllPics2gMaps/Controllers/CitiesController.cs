@@ -14,16 +14,15 @@ namespace AllPics2gMaps.Controllers
     [HttpGet]
     public string Get()
     {
-      string citiesJson = string.Empty;
+      string citiesJson;
 
-      DB mySqlDB = new DB();
+      DB mySqlDb = new DB();
 
       try
       {
-        mySqlDB.GpsMySqlQuery = "SELECT * FROM cities order by Name";
-        mySqlDB.GpsMySqlConnection.Open();
-        List<LatLngFileNameModel> latLngFileNames = new List<LatLngFileNameModel>();
-        MySqlDataReader mySqlDataReader = mySqlDB.GpsMySqlDataReader;
+        mySqlDb.GpsMySqlQuery = "SELECT * FROM cities order by Name";
+        mySqlDb.GpsMySqlConnection.Open();
+        MySqlDataReader mySqlDataReader = mySqlDb.GpsMySqlDataReader;
 
         List<CityModel> cities = new List<CityModel>();
         while (mySqlDataReader.Read())
@@ -40,7 +39,7 @@ namespace AllPics2gMaps.Controllers
       }
       finally
       {
-        mySqlDB.Dispose();
+        mySqlDb.Dispose();
       }
 
       return citiesJson;

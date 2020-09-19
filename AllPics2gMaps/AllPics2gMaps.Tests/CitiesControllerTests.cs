@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace AllPics2gMaps.Tests
 {
-  public class CitiesControlerTests
+  public class CitiesControllerTests
   {
     [Test]
     public void CheckIfGetCitiesReturnsAnything()

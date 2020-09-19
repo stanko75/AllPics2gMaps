@@ -55,7 +55,7 @@ namespace AllPics2gMaps.Controllers
         return Ok(JsonSerializer.Serialize(GetLatLngFromDB(unionCircles)));
       }
 
-      return Ok();
+      return Ok(JsonSerializer.Serialize(string.Empty));
     }
 
   }

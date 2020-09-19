@@ -30,8 +30,9 @@ namespace AllPics2gMaps.Tests
     {
       GoogleMapsFilterModel value = new GoogleMapsFilterModel();
 
-      value.Cities = new string[1];
+      value.Cities = new string[2];
       value.Cities[0] = "Bonn";
+      value.Cities[1] = "Novi Sad";
       value.Limit = 5;
 
       ActionResult<string> googleMaps = googleMapsController.Post(value);

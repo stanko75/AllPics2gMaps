@@ -1,5 +1,5 @@
 ﻿/*global ko, $, google*/
-/*jshint esversion: 6 */
+/*jshint es-version: 6 */
 
 (function (ns) {
     "use strict";
@@ -51,8 +51,7 @@
 
             if (useCircles) {
 
-                var circleProperties,
-                    center = { lat: event.latLng.lat(), lng: event.latLng.lng() },
+                var center = { lat: event.latLng.lat(), lng: event.latLng.lng() },
                     circle = new google.maps.Circle({
                         strokeColor: "#000000",
                         strokeOpacity: 0.8,
@@ -67,7 +66,7 @@
 
                 circles.push(circle);
 
-                google.maps.event.addListener(circle, 'radius_changed', function (event) {
+                google.maps.event.addListener(circle, 'radius_changed', function () {
                     var radiuschangedCircle = ns.circlesFilter.find(element => element = circle);
 
                     if (radiuschangedCircle) {
@@ -78,19 +77,19 @@
 
                 });
 
-                google.maps.event.addListener(circle, 'dragend', function (event) {
-                    var dragedCircle = ns.circlesFilter.find(element => element = circle);
+                google.maps.event.addListener(circle, "drag-end", function (event) {
+                    var draggedCircle = ns.circlesFilter.find(element => element = circle);
 
-                    if (dragedCircle) {
-                        dragedCircle.lat = event.latLng.lat();
-                        dragedCircle.lng = event.latLng.lng();
+                    if (draggedCircle) {
+                        draggedCircle.lat = event.latLng.lat();
+                        draggedCircle.lng = event.latLng.lng();
                     }
 
                     self.lat(event.latLng.lat());
                     self.lng(event.latLng.lng());
                 });
 
-                circleProperties = { radius: self.radius(), lat: self.lat(), lng: self.lng() };
+                var circleProperties = { radius: self.radius(), lat: self.lat(), lng: self.lng() };
 
                 if (!ns.circlesFilter) {
                     ns.circlesFilter = [];

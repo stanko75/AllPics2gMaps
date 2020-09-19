@@ -41,7 +41,7 @@
             });
             thumbs.on('click', '#' + key, function () {
                 //$('table[style*="width: 555px"]')
-                if (clicked && $('#' + key).css('borderWidth').toLowerCase() == '14px') {
+                if (clicked && $('#' + key).css('borderWidth').toLowerCase() === '14px') {
                     clicked = false;
                     $('#' + key).css("border", "");
                     ns.map.setZoom(15);
