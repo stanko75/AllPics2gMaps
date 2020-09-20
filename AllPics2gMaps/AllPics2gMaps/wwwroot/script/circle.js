@@ -50,7 +50,7 @@
             var useCircles = url.searchParams.get("useCircles");
 
             if (useCircles) {
-
+                self.radius = ko.observable(Math.pow(2, (21 - map.getZoom())));
                 var center = { lat: event.latLng.lat(), lng: event.latLng.lng() },
                     circle = new google.maps.Circle({
                         strokeColor: "#000000",
@@ -59,7 +59,7 @@
                         fillOpacity: 0.35,
                         map,
                         center: center,
-                        radius: parseFloat(self.radius()),
+                        radius: self.radius() * 1128.497220 * 0.0027,
                         editable: true,
                         draggable: true
                     });
